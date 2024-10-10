@@ -1,9 +1,20 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
-import { Category } from "../../models/Category";
+import { Category } from '../../models/Category'
 
 export async function createCategory(req: Request, res: Response) {
-    const categories = await Category.find();
+    try{
+        const { icon, name } = req.body
 
-    res.json(categories);
+        const category = await Category.create({
+            icon,
+            name
+        })
+
+        res.status(201).send(category)
+
+    } catch(error) {
+        res.sendStatus(500)
+        console.error(error)
+    }
 }
