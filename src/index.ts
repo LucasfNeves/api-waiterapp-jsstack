@@ -9,6 +9,14 @@ mongoose
     .then(() => {
         const app = express()
 
+        app.use((req, res, next) => {
+            res.setHeader('Access-Control-Allow-Origin', '*')
+            res.setHeader('Access-Control-Allow-Methods', '*')
+            res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+            next()
+        })
+
         app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
         app.use(express.json())
